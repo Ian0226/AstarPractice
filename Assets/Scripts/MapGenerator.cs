@@ -14,6 +14,10 @@ public class MapGenerator : MonoBehaviour
 
     public int ObstacleCount;//»ÙÃªª«¼Æ¶q
 
+    private List<Node> obstacleNodes = new List<Node>();
+
+    public List<Node> ObstacleNodes { get => obstacleNodes; set => obstacleNodes = value; }
+
     private void Awake()
     {
         InitMap();
@@ -55,8 +59,17 @@ public class MapGenerator : MonoBehaviour
         for(int i = 0; i < ObstacleCount; i++)
         {
             int num = Random.Range(0, Astar.Instance.Nodes.Count);
-            Astar.Instance.Nodes[num].SetNodeMatToObstacle();
-            Astar.Instance.Nodes[num].Available = false;
+            if (Astar.Instance.Nodes[num].CanBeObstacle)
+            {
+                Astar.Instance.Nodes[num].SetNodeMatToObstacle();
+                Astar.Instance.Nodes[num].Available = false;
+                ObstacleNodes.Add(Astar.Instance.Nodes[num]);
+            }
+            else
+            {
+                num = Random.Range(0, Astar.Instance.Nodes.Count);
+                i--;
+            }
         }
     }
 }

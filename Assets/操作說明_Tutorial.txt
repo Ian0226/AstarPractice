@@ -1,0 +1,19 @@
+鍵盤 C : 建立障礙節點
+鍵盤 D : 清除障礙節點
+鍵盤 Space : 開始尋路
+鍵盤 Backspace : 重新整理
+
+紅色為障礙節點
+綠色為起點
+藍色為終點
+
+點擊任意節點即可創建起點
+再次點擊即可創建終點
+
+MapGenerator
+Rows : 地圖列數
+Columns : 地圖行數
+ObstacleCount : 障礙物數量
+
+Atar
+StraightPath : 路徑是否只走直線(不走斜的)

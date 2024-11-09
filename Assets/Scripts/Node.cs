@@ -21,14 +21,18 @@ public class Node : MonoBehaviour
     [SerializeField]private float h;
 
     /// <summary>
-    /// 格子可否移動
+    /// 格子可否為障礙
     /// </summary>
     private bool available = true;
+
+    private bool canBeObstacle = true;
 
     /// <summary>
     /// 父節點
     /// </summary>
     [SerializeField]private Node parentNode = null;
+
+    private Vector3 nodeOriginPos;
 
     public float F { get => f; set => f = value; }
     public float G { get => g; set => g = value; }
@@ -36,11 +40,15 @@ public class Node : MonoBehaviour
     public int[] Coordinate { get => coordinate; set => coordinate = value; }
     public bool Available { get => available; set => available = value; }
     public Node ParentNode { get => parentNode; set => parentNode = value; }
+    public bool CanBeObstacle { get => canBeObstacle; set => canBeObstacle = value; }
 
     void Start()
     {
         meshRendererComponent = this.GetComponent<MeshRenderer>();
         originMat = meshRendererComponent.material;
+
+        nodeOriginPos = this.transform.position;
+        Debug.Log(nodeOriginPos);
     }
 
     private void OnMouseDown()
@@ -59,6 +67,21 @@ public class Node : MonoBehaviour
     public void SetNodeToOrigin()
     {
         ChangeNodeMaterial(originMat);
+        Clear();
+    }
+
+    private void SetNodeToStart()
+    {
+        ChangeNodeMaterial(startNodeMat);
+        SetNodeYPos(nodeOriginPos.y + 0.5f);
+        CanBeObstacle = false;
+    }
+
+    private void SetNodeToEnd()
+    {
+        ChangeNodeMaterial(endNodeMat);
+        SetNodeYPos(nodeOriginPos.y + 0.5f);
+        CanBeObstacle = false;
     }
 
     public void SetNodeMatToChoosed()
@@ -74,6 +97,8 @@ public class Node : MonoBehaviour
     public void SetNodeMatTofinalPathMat()
     {
         ChangeNodeMaterial(finalPathMat);
+        SetNodeYPos(nodeOriginPos.y + 0.5f);
+        CanBeObstacle = false;
     }
 
     private void CheckClick()
@@ -85,21 +110,25 @@ public class Node : MonoBehaviour
             if (Astar.Instance.Start == null)
             {
                 Astar.Instance.Start = this;
-                ChangeNodeMaterial(startNodeMat);
+                SetNodeToStart();
+                //ChangeNodeMaterial(startNodeMat);
             }
             else if (Astar.Instance.Start == this)
             {
                 Astar.Instance.Start = null;
-                ChangeNodeMaterial(originMat);
+                //ChangeNodeMaterial(originMat);
+                Clear();
             }
             else if (Astar.Instance.End == null && Astar.Instance.End == this)
             {
                 Astar.Instance.End = null;
-                ChangeNodeMaterial(originMat);
+                //ChangeNodeMaterial(originMat);
+                Clear();
             }
             else if (Astar.Instance.Start != null && Astar.Instance.End == null)
             {
                 Astar.Instance.End = this;
+                SetNodeToEnd();
                 ChangeNodeMaterial(endNodeMat);
             }
         }  
@@ -111,5 +140,35 @@ public class Node : MonoBehaviour
         g = 0;
         h = 0;
         parentNode = null;
+
+        ChangeNodeMaterial(originMat);
+        SetNodeYPos(nodeOriginPos.y);
+
+        CanBeObstacle = true;
+    }
+
+    public void ResetAvailable()
+    {
+        available = true;
+        ChangeNodeMaterial(originMat);
+    }
+
+    private void SetNodeYPos(float targetY)
+    {
+        StartCoroutine("MoveNodeY", targetY);
+        //this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, this.transform.position.z);
+    }
+
+    IEnumerator MoveNodeY(float targetY)
+    {
+        float currentY = 0.0f;
+        while (Mathf.Abs(this.transform.position.y - targetY) > 0.01f)
+        {
+            float yPos = Mathf.SmoothDamp(this.transform.position.y, targetY, ref currentY, 0.15f);
+            this.transform.position = new Vector3(this.transform.position.x, yPos, this.transform.position.z);
+            yield return null;
+        }
+        this.transform.position = new Vector3(this.transform.position.x, targetY, this.transform.position.z);
     }
 }
+

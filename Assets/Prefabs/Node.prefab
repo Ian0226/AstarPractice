@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1051244543537708630}
   - component: {fileID: 7831912008051068083}
   - component: {fileID: 6342424634111936385}
-  - component: {fileID: 749421522353101452}
   - component: {fileID: 1023174940229331892}
+  - component: {fileID: 4300613567223501353}
   m_Layer: 0
   m_Name: Node
   m_TagString: Node
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3773350944759611259}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &6342424634111936385
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -85,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &749421522353101452
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3773350944759611259}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1023174940229331892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,3 +102,21 @@ MonoBehaviour:
   choosedMat: {fileID: 2100000, guid: 7df0c72a190b4c54786d6a0fc4af4b85, type: 2}
   obstacleMat: {fileID: 2100000, guid: fabe3136d8e513f429959ff14caf6774, type: 2}
   finalPathMat: {fileID: 2100000, guid: 4367f66400a07f94eb18b3fd5712547e, type: 2}
+  f: 0
+  g: 0
+  h: 0
+  parentNode: {fileID: 0}
+--- !u!64 &4300613567223501353
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773350944759611259}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
