@@ -48,7 +48,10 @@ public class MapGenerator : MonoBehaviour
     private void MoveCamera()
     {
         float x = (Astar.Instance.NodeList[Columns - 1][Rows - 1].gameObject.transform.position.x - Astar.Instance.NodeList[0][0].gameObject.transform.position.x)/2;
-        Camera.main.transform.position = new Vector3(x, Camera.main.transform.position.y, Camera.main.transform.position.z);
+        float y = (Rows * Columns) * 8.5f / 100;
+        float z = (Rows * Columns) * (-1.1f) / 100;
+        
+        Camera.main.transform.position = new Vector3(x, y, z);
     }
 
     /// <summary>
